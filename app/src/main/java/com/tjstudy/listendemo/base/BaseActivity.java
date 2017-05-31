@@ -7,7 +7,7 @@ import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
-import com.tjstudy.listendemo.listener.OnSpeechCallBackListener;
+import com.tjstudy.listendemo.interfaces.ISpeechCallBack;
 import com.tjstudy.listendemo.utils.JsonParser;
 
 import org.json.JSONException;
@@ -19,14 +19,6 @@ import java.util.LinkedHashMap;
 public abstract class BaseActivity extends AppCompatActivity {
     HashMap<String, String> mIatResults = new LinkedHashMap<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initVariables();
-        initView();
-        loadData();
-    }
-
     protected void initVariables() {
     }
 
@@ -35,12 +27,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void loadData() {
     }
 
+    protected void loadDataError(String error) {
+        // TODO: 2017/5/31 统一的网络访问错误处理--提示
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initVariables();
+        initView();
+        loadData();
+    }
+
     /**
      * 显示对话框：语音转文本
      *
      * @param onSpeechListener 接口
      */
-    protected void showSpeechDialog(final OnSpeechCallBackListener onSpeechListener) {
+    protected void showSpeechDialog(final ISpeechCallBack onSpeechListener) {
         // 初始化听写Dialog，如果只使用有UI听写功能，无需创建SpeechRecognizer
         // 使用UI听写功能,放置布局文件和图片资源
         //使用云服务InitListener参数写成null
